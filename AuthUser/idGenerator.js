@@ -14,7 +14,7 @@ const generateUserId = async () => {
 
 const generateGroupId = async () => {
   while (true) {
-    const groupId = Math.floor(1000 + Math.random() * 9000);
+    const groupId = Math.floor(10000000 + Math.random() * 9000);
     const exists = await db.query("SELECT * FROM users WHERE id = $1", [
       groupId,
     ]);

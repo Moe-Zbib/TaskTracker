@@ -1,11 +1,16 @@
-const validateGroupInput = (name, description) => {
-  if (!name || typeof name != "string" || name.trim() === "" || name) {
-    throw console.error("Inalid Group name");
-  } else if (name.length < 4) {
-    throw console.error("Name too short");
-  } else if (name.length > 30) {
-    throw console.error("Name too big");
-  }
-};
+const { body } = require("express-validator");
+
+const validateGroupInput = [
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Name is required")
+    .isString()
+    .withMessage("Invalid Group name")
+    .isLength({ min: 4 })
+    .withMessage("Name too short")
+    .isLength({ max: 30 })
+    .withMessage("Name too big"),
+];
 
 module.exports = { validateGroupInput };

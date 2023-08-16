@@ -39,3 +39,38 @@ Update your project documentation to include information about the new group-rel
 Usability Considerations:
 
 Keep the user experience intuitive and user-friendly. Ensure that users can easily create groups, invite members, and manage tasks within groups.
+
+---
+
+Groups Table:
+
+This table will store information about the groups that users create.
+Columns:
+id: Unique identifier for the group (primary key).
+name: Name of the group.
+description: Brief description of the group.
+created_by: Foreign key referencing the user who created the group.
+created_at: Timestamp indicating when the group was created.
+privacy: Flag indicating whether the group is private (boolean).
+Other relevant columns as needed.
+Group Members Table:
+
+This table will manage the memberships of users within groups.
+Columns:
+id: Unique identifier for the group member (primary key).
+group_id: Foreign key referencing the group the member belongs to.
+user_id: Foreign key referencing the user who is a member of the group.
+role: User's role within the group (admin, member, etc.).
+joined_at: Timestamp indicating when the user joined the group.
+Group Tasks Table:
+
+This table will store information about tasks assigned within groups.
+Columns:
+id: Unique identifier for the task (primary key).
+group_id: Foreign key referencing the group to which the task belongs.
+assigned_to: Foreign key referencing the user to whom the task is assigned.
+task_type: Type of task (e.g., "assignment", "review", etc.).
+priority: Priority level of the task.
+status: Current status of the task (pending, in progress, completed, etc.).
+created_at: Timestamp indicating when the task was created.
+Other relevant columns as needed.

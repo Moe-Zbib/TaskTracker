@@ -11,6 +11,7 @@ const authMiddleware = (req, res, next) => {
     const decoded = verifyJWT(token, "86dtfyoguihoikp");
     req.user = decoded;
     next();
+    console.log("All good from auth middleware side");
   } catch (error) {
     console.error("Authentication Error:", error.message);
     res

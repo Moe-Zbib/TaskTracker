@@ -10,6 +10,7 @@ app.use(
   session({ resave: true, saveUninitialized: true, secret: "9186f179a86" })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use("/", routes);
 
