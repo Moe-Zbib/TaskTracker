@@ -7,7 +7,6 @@ const { use } = require("./GroupRoutes");
 const groupController = {};
 
 groupController.create = async (name, description, public, userId) => {
-  console.log("from controller side ", name, description);
 
   try {
     const invCode = await genInvCode();
@@ -28,6 +27,35 @@ groupController.create = async (name, description, public, userId) => {
   }
 };
 
+groupController.kickUser = async (groupId, userId) => {
+  try {
+    const kickedUserRoleQuery = await db.query(
+      "SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2",
+      [groupId, userId]
+    );
+
+    if (kickedUserRoleQuery.rows.length === 0) {
+      throw new Error("User not found in the group");v
+    }
+
+    const kickedUserRole = kickedUserRoleQuery.rows[0].role;
+
+    if (
+      requestingUserRole === roles.MODERATOR &&
+      kickedUserRole === roles.MODERATOR
+    ) {
+      throw new Error("Moderators cannot kick other moderators");
+    }
+
+    const kickUser = await db.query(
+      `DELETE FROM group_members WHERE  group_id=$1 AND user_id =$2`,
+      [groupId, userId]
+    );
+  } catch (error) {
+    throw new Error("Error while deleting the member", error);
+  }
+};
+
 groupController.join = async (groupId, userId) => {
   console.log(groupId, userId);
   try {
@@ -42,13 +70,24 @@ groupController.join = async (groupId, userId) => {
 groupController.edit = async (groupId, newGroupName) => {
   try {
     const updateQuery = await db.query(
-      "UPDATE groups SET group_name = $1 WHERE id = $2",
+      "UPDATE groups SET name = $1 WHERE id = $2",
       [newGroupName, groupId]
     );
     return updateQuery;
   } catch (error) {
     console.error("Error in controller", error);
     throw error;
+  }
+};
+
+groupController.delete = async (groupId) => {
+  try {
+    const deleteGroup = await db.query(
+      `DELETE FROM group_members AND groups WHERE  group_id=$1`,
+      [groupId]
+    );
+  } catch (error) {
+    console.error("Error deleting group: ", error);
   }
 };
 

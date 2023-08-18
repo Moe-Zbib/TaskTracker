@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const groupController = require("./GroupController");
-const { validateGroupInput } = require("./validateGroupInpute");
+const { validateGroupInput } = require("./validateGroupInput");
 const { limit } = require("./groupRateLimitter");
 const authMiddleware = require("../AuthUser/AuthMiddleware");
 const { verifyCode } = require("./invCode");
@@ -44,6 +44,18 @@ router.post("/edit", authMiddleware, checkRole, async (req, res) => {
   }
 });
 
+router.delete("/kick", authMiddleware, checkRole, async (req, res) => {
+  try {
+    const { groupId, userId } = req.body;
+    console.log("Kicking user from the group", groupId, "with id", userId);
+    const kickedUser = await groupController.kickUser(groupId, userId);
+    res.status(200).json({ message: "User kicked from the group" });
+  } catch (error) {
+    console.error(`Error occurred in Kick User: ${error}`);
+    res.status(500).json({ message: "An error occurred while kicking user" });
+  }
+});
+
 router.post("/join", authMiddleware, async (req, res) => {
   const { invCode } = req.body;
   const userId = req.user.userId;
@@ -60,7 +72,13 @@ router.post("/join", authMiddleware, async (req, res) => {
     return res.status(403).json({ message: "User already in group" });
   }
   const joinReq = await groupController.join(groupId, userId);
-  res.status(200).json({ message: "You can join the group" });
+  res.status(200).json({ message: "User Joined Group" });
+});
+
+router.delete("./delete", authMiddleware, checkRole, async (req, res) => {
+  const groupId = req.body;
+  console.log("Deleting Group...");
+  const deleteGroup = await groupController.delete(groupId);
 });
 
 module.exports = router;

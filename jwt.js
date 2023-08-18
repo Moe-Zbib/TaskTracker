@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secretKey = process.env.JWT_SECRET_KEY || "your-secret-key"; // Use environment variable or a default key
+const secretKey = "86dtfyoguihoikp";
 
 const createJWT = (user) => {
   const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, {
@@ -10,9 +10,11 @@ const createJWT = (user) => {
 
 const verifyJWT = (token) => {
   try {
+    console.log("token from JWT is: ", token);
     const decoded = jwt.verify(token, secretKey);
     return decoded;
   } catch (error) {
+    console.log(error);
     throw new Error("JWT verification failed");
   }
 };
