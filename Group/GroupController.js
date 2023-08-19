@@ -2,12 +2,10 @@ const db = require("../Module/db");
 const Roles = require("../enums/roles");
 const { generateGroupId } = require("../AuthUser/idGenerator");
 const { genInvCode } = require("./invCode");
-const { use } = require("./GroupRoutes");
 
 const groupController = {};
 
 groupController.create = async (name, description, public, userId) => {
-
   try {
     const invCode = await genInvCode();
     const groupId = await generateGroupId();
@@ -35,7 +33,8 @@ groupController.kickUser = async (groupId, userId) => {
     );
 
     if (kickedUserRoleQuery.rows.length === 0) {
-      throw new Error("User not found in the group");v
+      throw new Error("User not found in the group");
+      v;
     }
 
     const kickedUserRole = kickedUserRoleQuery.rows[0].role;
