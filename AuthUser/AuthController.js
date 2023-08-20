@@ -1,3 +1,5 @@
+const Redis = require("ioredis");
+
 const db = require("../Module/db");
 const bcrypt = require("bcrypt");
 const { createJWT } = require("../jwt");

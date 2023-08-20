@@ -2,6 +2,7 @@ const db = require("../Module/db");
 const transporter = require("../utils/nodeMailer");
 const Roles = require("../enums/roles");
 const { getUserEmail } = require("../utils/getEmail");
+const { Queue } = require("bull");
 
 const taskController = {};
 
@@ -52,7 +53,7 @@ taskController.create = async (
       console.log(`New task with ID ${newTaskId} created successfully.`);
     }
 
-    const assignedEmail = await getUserEmail(assignedToUserId);
+    /*{   const assignedEmail = await getUserEmail(assignedToUserId);
     if (assignedEmail) {
       const mailOptions = {
         from: "notifications@tasksystem.com",
@@ -69,7 +70,7 @@ taskController.create = async (
           console.log("Succeeded");
         }
       });
-    }
+    }}*/
   } catch (error) {
     console.error("Error creating task:", error);
   }

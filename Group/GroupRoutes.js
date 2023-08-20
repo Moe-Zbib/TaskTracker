@@ -75,10 +75,21 @@ router.post("/join", authMiddleware, async (req, res) => {
   res.status(200).json({ message: "User Joined Group" });
 });
 
-router.delete("./delete", authMiddleware, checkRole, async (req, res) => {
+router.delete("/delete", authMiddleware, checkRole, async (req, res) => {
   const groupId = req.body;
   console.log("Deleting Group...");
   const deleteGroup = await groupController.delete(groupId);
+});
+
+router.get("/fetch", authMiddleware, async (req, res) => {
+  const userId = req.user.userId;
+  const userGroups = await groupController.fetch(userId);
+
+  if (userGroups.success) {
+    res.status(200).json({ groups: userGroups.groups });
+  } else {
+    res.status(500).json({ message: "Failed to fetch user's groups" });
+  }
 });
 
 module.exports = router;

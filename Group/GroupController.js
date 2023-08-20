@@ -90,4 +90,17 @@ groupController.delete = async (groupId) => {
   }
 };
 
+groupController.fetch = async (req, res) => {
+  try {
+    const groupsQuery = await db.query(
+      "SELECT groups.id, groups.name FROM group_members INNER JOIN groups ON group_members.group_id = groups.id WHERE group_members.user_id = $1",
+      [userId]
+    );
+    return { success: true, groups: groupsQuery.rows };
+  } catch (error) {
+    console.error("Error fetching user's groups:", error);
+    return { success: false, message: "Failed to fetch user's groups" };
+  }
+};
+
 module.exports = groupController;
