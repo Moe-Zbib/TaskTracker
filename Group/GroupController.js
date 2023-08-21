@@ -89,11 +89,10 @@ groupController.delete = async (groupId) => {
     console.error("Error deleting group: ", error);
   }
 };
-
-groupController.fetch = async (req, res) => {
+groupController.fetch = async (userId) => {
   try {
     const groupsQuery = await db.query(
-      "SELECT groups.id, groups.name FROM group_members INNER JOIN groups ON group_members.group_id = groups.id WHERE group_members.user_id = $1",
+      "SELECT groups.id AS group_id, groups.name AS group_name FROM group_members INNER JOIN groups ON group_members.group_id = groups.id WHERE group_members.user_id = $1",
       [userId]
     );
     return { success: true, groups: groupsQuery.rows };

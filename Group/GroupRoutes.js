@@ -83,10 +83,11 @@ router.delete("/delete", authMiddleware, checkRole, async (req, res) => {
 
 router.get("/fetch", authMiddleware, async (req, res) => {
   const userId = req.user.userId;
+  console.log("user id:", userId);
   const userGroups = await groupController.fetch(userId);
-
   if (userGroups.success) {
     res.status(200).json({ groups: userGroups.groups });
+    console.log("Groups fetched");
   } else {
     res.status(500).json({ message: "Failed to fetch user's groups" });
   }

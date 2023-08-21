@@ -18,3 +18,6 @@ curl -X DELETE "http://localhost:3001/group/kick" -H "Content-Type: application/
 
 **create task**
 curl -X POST http://localhost:3001/task/create -H "Content-Type: application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwMDM1MywiaWF0IjoxNjkyNDc0NzY0LCJleHAiOjE2OTI0NzgzNjR9.BN9dg-JXtSFVgLsMbCdwZM0hz4DAZq5s94zF8voBNsc" -d "{\"title\": \"Your Task Title\",\"description\": \"Your Task Description\",\"taskType\": \"Task Type\",\"priority\": \"Priority\",\"assignedToUserId\": 105268,\"tags\": \"Tag1,Tag2\",\"comments\": \"Your Task Comments\",\"startDate\": \"2023-08-16T00:00:00Z\",\"deadline\": \"2023-08-31T00:00:00Z\",\"completionPercentage\": 0,\"groupId\": 10007909,\"dependencyId\": null}"
+
+**fetch groups**
+curl -X GET "http://localhost:3001/group/fetch" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwMDM1MywiaWF0IjoxNjkyNTY0NDEwLCJleHAiOjE2OTI1NjgwMTB9.mxrUUQRzszzWUtnNfciZo8tgH1OKnz3ydPBiFWeq7Tc"

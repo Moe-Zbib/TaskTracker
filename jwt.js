@@ -10,7 +10,7 @@ const createJWT = (user) => {
 
 const verifyJWT = (token) => {
   try {
-    console.log("token from JWT is: ", token);
+    console.log("JWT check");
     const decoded = jwt.verify(token, secretKey);
     return decoded;
   } catch (error) {

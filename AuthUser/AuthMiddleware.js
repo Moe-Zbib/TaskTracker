@@ -7,11 +7,11 @@ const authMiddleware = (req, res, next) => {
       throw new Error("Authorization header missing");
     }
     const token = req.header("Authorization").replace("Bearer ", "");
-    console.log("user's token is", token);
+
     const decoded = verifyJWT(token, "86dtfyoguihoikp");
     req.user = decoded;
     next();
-    console.log("All good from auth middleware side");
+    console.log("Auth middleware check");
   } catch (error) {
     console.error("Authentication Error:", error.message);
     res

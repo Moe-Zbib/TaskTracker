@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+/*{const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -17,3 +17,4 @@ transporter.verify((error, success) => {
 });
 
 module.exports = transporter;
+}*/
